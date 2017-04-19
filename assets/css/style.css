@@ -1,0 +1,53 @@
+
+body{
+	background-image: url("../images/back2.jpg");
+	width: 100%;
+
+}
+h1{
+	font-family: 'Stint Ultra Expanded', cursive;
+	font-weight: bolder;
+	margin-top: 40px;
+	font-size: 50px;
+}
+#main{
+	width: 75%;
+	height: 90%;
+	margin: auto;
+	background-color: seashell;
+	position: absolute;
+	margin: 40px 150px 20px 160px;
+	text-align: center;
+}
+
+#questionBar{
+	display: none;
+}
+
+#start{
+	padding-left: 50px;
+	padding-right: 50px;
+	position: absolute;
+	top: 300px;
+	left: 440px;
+	font-size: 20px;
+}
+p{
+	font-size: 30px;
+}
+
+#image{
+	height: 200px;
+	width: 200px;
+	/*border: none;*/
+	display: none;
+}
+
+ul {
+    list-style: none;
+    margin-left: -25px;
+}
+.liShow{
+	padding: 20px;
+	
+}
