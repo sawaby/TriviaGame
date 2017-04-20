@@ -37,19 +37,23 @@ var questions = [{
     url: "assets/images/brazil.gif",
     incorrect: "assets/images/brazil.gif"
 }];
-console.log("hello");
-//gifs(questions[0].giphy.url);
-// var myurl = "http://api.giphy.com/v1/gifs/population?api_key=dc6zaTOxFJmzC"
-// //console.log(questions[0].giphy.gif);
-// gifs(myurl);
-function reset(){
 
+
+function reset(){
+	// $("#mylist").empty();
+	// $("#image").empty();
+	selectedQuestion = 0;
+	// $("#image").hide();
+	//$("#question").show();
+	 //game(selectedQuestion);
+	 //$("#questionBar").show();
 
 }
 
 var url;
 var p = $('<p>');
 function game(selectedQuestion){
+	
 	$("#mylist").empty();
 	$("#question").empty();
 	$("#image").hide();
@@ -77,14 +81,19 @@ function game(selectedQuestion){
 function timer(){
 
 }
-
-game(selectedQuestion);
-$("#start").on("click", function(){
-	//game();
+// reset();
+//game(selectedQuestion);
+// $("#start").on("click", function(){
+// 	//game();
+// 	$("#questionBar").show();
+// 	$(this).hide();
+// });
+$(document).on("click","#start", function(){
+	game(selectedQuestion);
+	$("#gameover").empty();
 	$("#questionBar").show();
 	$(this).hide();
 });
-
 
 function ansSelection(){
 //$("li").on("click", function(){
@@ -105,57 +114,37 @@ function ansSelection(){
 	}
 
 	selectedQuestion++;
-	if(selectedQuestion == 5){
-		setTimeout(gameOver, 2000);
+	if(selectedQuestion == 4){
+		setTimeout(gameOver, 1000);
 	}
 	console.log(selectedQuestion+"selectedQuestion");
-	setTimeout(function(){game(selectedQuestion);}, 2000);
+	setTimeout(function(){game(selectedQuestion);}, 1000);
 }
 
 
-
-
+//displaye image when the answer is clicked (will call the function)
 function display(url){
 	$("#image").attr("src", url);
 	$("#image").show();
-	//$("#image").append("img");
-	//$("#question").show();
-	console.log(url);
-
-
 }
 
-
-
-
+//if mouse over the elements change the style
 function mouseOVER(){
 	$(this).addClass('liShow');
 }
+//if mouse out of the elements change the style back to normal
 function mouseOUT(){
 	$(this).removeClass('liShow');
 }
 function gameOver(){
-	$("#mylist").empty();
-	$("#image").empty();
-	$("#question").html("Game Over <br />");
-	
+	$("#question").empty();
+	$("#gameover").html("Game Over. <br />");
+	$("#gameover").show();
 	$("#start").text("Restart").show();
+	selectedQuestion = 0;
+	$("#questionBar").hide();
 	game(selectedQuestion);
+	
+	// reset();
 	// $("#start").show();
-}
-//var queryURL = "http://api.giphy.com/v1/gifs/search?q=population&api_key=dc6zaTOxFJmzC&limit=1";
-function gifs(gif){
-
-	console.log("gif"+gif);
-    $.ajax({
-    	dataType: "jsonp",
-    	url: gif,
-    	method: "GET"
-    }).done(function(response) {
-
-      $("#image").attr("src",response.Images.url);
-
-      console.log(response);
-    });
-
 }
