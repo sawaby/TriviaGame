@@ -1,7 +1,7 @@
 // variables 
 var selectedQuestion = 0;
 var ansSelected = false;
-var counter;
+var counter =0;
 var url;
 var p = $('<p>');
 var second=10;
@@ -45,13 +45,14 @@ clearInterval(counter);
 // the main function which runs the actual game, adding question and the choices
 function game(selectedQuestion){
 	// calling timer 
+	clearInterval(counter);
 	second = 10;
 	counter = setInterval(timer, 1000);
 	// clear displaye erea
 	$("#mylist").empty();
 	$("#question").empty();
 	$("#image").hide();
-
+	$("#displayTime2").empty();
 	
 	//display each question on the object list and its options 
 	$.each(questions[selectedQuestion].choices, function(j){
@@ -62,7 +63,7 @@ function game(selectedQuestion){
 		li.text(questions[selectedQuestion].choices[j]);
 		$("#mylist").append(li);
 		ansSelected = false;
-
+		$("#displayTime").html("Time Remaining: "+second+" Seconds");
 
 	});
 	
@@ -90,30 +91,33 @@ function ansSelection(){
 	url = questions[selectedQuestion].url;
 	//var incorrectImage = questions[selectedQuestion].incorrect;
 	//console.log($(this).index());
+	$("#mylist").empty();
 	if($(this).index() == questions[selectedQuestion].correctAnswer){
-		$("#mylist").empty();
+		
 		$("#question").html("Correct!");
-		clearInterval(counter);
-		display(url);
+		// clearInterval(counter);
+		//display(url);
 		correctSelection++;
 		// second = 30;
 		// setTimeout(timer, 1000);
 		
 	}else{
-		$("#mylist").empty();
+		//$("#mylist").empty();
 		$("#question").html("Nope! <br />");
 		$("#question").append("The Correct Answer was: &nbsp;"+questions[selectedQuestion].choices[questions[selectedQuestion].correctAnswer]);
-		clearInterval(counter);
-		display(url);
+		// clearInterval(counter);
+		
 		incorrectSelection++;
 		
 		
-	}
+	}display(url);
 	
 	selectedQuestion++;
 	if(selectedQuestion <= 4){
 		//console.log(selectedQuestion+"selectedQuestion");
-		setTimeout(function(){game(selectedQuestion);}, 1000);
+		clearInterval(counter);
+		setTimeout(function(){game(selectedQuestion);}, 2000);
+
 		//second = 31;
 		//setTimeout(timer, 1000);
 
@@ -121,7 +125,7 @@ function ansSelection(){
 		//clearInterval(counter);
 		//clearTimeout(timer);
 		//second = 31;
-		setTimeout(gameOver, 1000);
+		setTimeout(gameOver, 2000);
 
 	}
 }
@@ -143,13 +147,10 @@ function mouseOUT(){
 }
 // timer function add a timer of 30 seconds on the DOM and reset it when the answer is not selected
 function timer(){
-	if(second >= 0){
-		$("#displayTime").html("Time Remaining: "+second+" Seconds");
-		second--;
-		
-	}
+	second--;
+	$("#displayTime").html("Time Remaining: "+second+" Seconds");
 	
-
+	//if it is the last question and is not selected call gameover()
 	if (second === 0 && ansSelected === false && selectedQuestion === 4) {
     	console.log("game over due to not selecting"+selectedQuestion);
     	clearInterval(counter);
@@ -159,10 +160,9 @@ function timer(){
     }
 	if (second === 0 && ansSelected === false) {
       $("#displayTime").html("Time Remaining: "+second+" Seconds <br />");
-      $("#displayTime").append("Out of Time!");
+      $("#displayTime2").append("Out of Time!");
       //second = 31;
       $("#mylist").empty();
-	 // $("#question").html("Nope! <br />");
 	  $("#question").html("The Correct Answer was: &nbsp;"+questions[selectedQuestion].choices[questions[selectedQuestion].correctAnswer]);
 	  clearInterval(counter);
 	  url = questions[selectedQuestion].url;
@@ -171,7 +171,10 @@ function timer(){
 	  //$("#image").hide();
       selectedQuestion++;
       if(selectedQuestion <= 4){
-      	setTimeout(function(){game(selectedQuestion);}, 1000);
+      	second = 10;
+      	clearInterval(counter);
+      	//game(selectedQuestion);
+      	setTimeout(function(){game(selectedQuestion);}, 2000);
       }
       
     }
